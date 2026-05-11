@@ -1,0 +1,64 @@
+/*Paleta de colores {
+    Amarillo: #F9C74F;
+    Negro grafito: #252525;
+    Gris muy claro para fondo: #F8F9FA;
+    blanco: #FFFFFF;
+    color texto: #333333;
+}
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F0F2F5;
+    color: #333333;
+}
+
+.contenedorPrincipal {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.cabezera {
+    background-color: #252525;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+}
+
+
+
+.navegador ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.navegador a {
+    color: #FFFFFF; /* Blanco */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navegador a:hover {
+    color: #F9C74F; /* Amarillo al pasar el ratón */
+}
+
+.content {
+    flex: 1;
+    padding: 2rem 5%;
+}
+
+.main-footer {
+    background-color: #252525;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.8rem;
+    border-top: 2px solid #F9C74F;
+}

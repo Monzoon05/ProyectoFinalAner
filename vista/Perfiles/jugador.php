@@ -9,9 +9,6 @@ if (!isset($_SESSION['usuario_id']) || $_SESSION['rol'] !== 'jugador') {
 
 $id_jugador = $_SESSION['usuario_id'];
 
-// ============================================================
-// 1. ESTADÍSTICAS PERSONALES
-// ============================================================
 $sql_stats = "SELECT 
                 COUNT(*) as total_multas,
                 SUM(CASE WHEN estado = 'pagado' THEN 1 ELSE 0 END) as pagadas,
@@ -22,9 +19,6 @@ $sql_stats = "SELECT
               WHERE id_usuario_multado = $id_jugador";
 $stats = mysqli_fetch_assoc(mysqli_query($conn, $sql_stats));
 
-// ============================================================
-// 2. RANKING DEL EQUIPO (ordenado por monto total DESC)
-// ============================================================
 $sql_ranking = "SELECT 
                     u.nombre,
                     u.apellido,
@@ -37,9 +31,6 @@ $sql_ranking = "SELECT
                 ORDER BY monto_total DESC, total_multas DESC";
 $consulta_ranking = mysqli_query($conn, $sql_ranking);
 
-// ============================================================
-// 3. MIS MULTAS
-// ============================================================
 $sql_multas = "SELECT m.*, u.nombre AS nombre_creador, u.apellido AS apellido_creador 
                FROM multas m
                JOIN usuarios u ON m.id_usuario_creador = u.id_usuario
@@ -55,47 +46,6 @@ $consulta_multas = mysqli_query($conn, $sql_multas);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>isunKi - Panel de Jugador</title>
     <link rel="stylesheet" href="../../css/estilos.css">
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        .seccion {
-            scroll-margin-top: 80px;
-        }
-        
-        .navegador ul li a.activo {
-            color: #F9C74F;
-            border-bottom: 2px solid #F9C74F;
-            padding-bottom: 4px;
-        }
-        
-        .tabla-ranking {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        
-        .tabla-ranking th,
-        .tabla-ranking td {
-            padding: 14px 16px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .tabla-ranking th {
-            background-color: #252525;
-            color: #F9C74F;
-            font-weight: 600;
-        }
-        
-        .tabla-ranking tr:hover {
-            background-color: #fafafa;
-        }
-    </style>
 </head>
 <body>
 <div class="contenedorPrincipal">
@@ -116,7 +66,6 @@ $consulta_multas = mysqli_query($conn, $sql_multas);
     </header>
 
     <main class="content">
-        <!-- MOSTRAR MENSAJES -->
         <?php if(isset($_GET['mensaje'])): ?>
             <div style="background-color: #2A9D8F; color: white; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
                 <?php echo htmlspecialchars($_GET['mensaje']); ?>
@@ -129,9 +78,6 @@ $consulta_multas = mysqli_query($conn, $sql_multas);
             </div>
         <?php endif; ?>
 
-        <!-- ================================================== -->
-        <!-- SECCIÓN INICIO                                      -->
-        <!-- ================================================== -->
         <section id="inicio" class="seccion">
             <div class="tarjeta-bienvenida">
                 <div class="tarjeta-bienvenida-contenido">
@@ -146,9 +92,6 @@ $consulta_multas = mysqli_query($conn, $sql_multas);
             </div>
         </section>
 
-        <!-- ================================================== -->
-        <!-- SECCIÓN ESTADÍSTICAS                                -->
-        <!-- ================================================== -->
         <section id="estadisticas" class="seccion">
             <h2>Mis Estadísticas</h2>
             <div class="flex-center">
@@ -175,42 +118,22 @@ $consulta_multas = mysqli_query($conn, $sql_multas);
             </div>
         </section>
 
-        <!-- ================================================== -->
-        <!-- SECCIÓN RANKING SIMPLIFICADA                        -->
-        <!-- ================================================== -->
         <section id="ranking" class="seccion">
             <h2>Ranking del Equipo</h2>
             <div style="overflow-x: auto;">
                 <table class="tabla-ranking">
                     <thead>
-                        <tr>
-                            <th>Posición</th>
-                            <th>Jugador</th>
-                            <th>Total Multas</th>
-                            <th>Monto Total</th>
-                        </tr>
+                        <tr><th>Posición</th><th>Jugador</th><th>Total Multas</th><th>Monto Total</th></tr>
                     </thead>
                     <tbody>
-                        <?php 
-                        $posicion = 0;
-                        while($jugador = mysqli_fetch_assoc($consulta_ranking)):
-                            $posicion++;
-                        ?>
-                        <tr>
-                            <td><?php echo $posicion; ?></td>
-                            <td><?php echo htmlspecialchars($jugador['nombre'] . ' ' . $jugador['apellido']); ?></td>
-                            <td><?php echo $jugador['total_multas'] ?? 0; ?></td>
-                            <td><?php echo number_format($jugador['monto_total'] ?? 0, 2); ?> €</td>
-                        </tr>
+                        <?php $posicion = 0; while($jugador = mysqli_fetch_assoc($consulta_ranking)): $posicion++; ?>
+                        <tr><td><?php echo $posicion; ?></td><td><?php echo htmlspecialchars($jugador['nombre'] . ' ' . $jugador['apellido']); ?></td><td><?php echo $jugador['total_multas'] ?? 0; ?></td><td><?php echo number_format($jugador['monto_total'] ?? 0, 2); ?> €</td></tr>
                         <?php endwhile; ?>
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- ================================================== -->
-        <!-- SECCIÓN MIS MULTAS                                  -->
-        <!-- ================================================== -->
         <section id="multas" class="seccion">
             <h2>Mis Multas</h2>
             <div class="contenedorTarjetas">
@@ -253,9 +176,6 @@ $consulta_multas = mysqli_query($conn, $sql_multas);
         </section>
     </main>
 
-    <!-- ================================================== -->
-    <!-- FOOTER                                             -->
-    <!-- ================================================== -->
     <footer class="main-footer">
         <div class="footer-menu">
             <div class="footer-logo">
@@ -277,59 +197,33 @@ $consulta_multas = mysqli_query($conn, $sql_multas);
     </footer>
 </div>
 
-<!-- SCRIPT PARA MENÚ ACTIVO, SCROLL Y QUEJAS -->
 <script>
-    // Función para enviar queja con prompt
     function enviarQueja(idMulta, motivoMulta) {
         let motivo = prompt("Escribe el motivo de tu queja para la multa:\n\n" + motivoMulta);
-        
-        if (motivo === null) {
-            return;
-        }
-        
-        if (motivo.trim() === "") {
-            alert("Debes escribir un motivo para la queja");
-            return;
-        }
-        
-        if (motivo.trim().length < 10) {
-            alert("El motivo debe tener al menos 10 caracteres");
-            return;
-        }
-        
+        if (motivo === null) return;
+        if (motivo.trim() === "") { alert("Debes escribir un motivo para la queja"); return; }
+        if (motivo.trim().length < 10) { alert("El motivo debe tener al menos 10 caracteres"); return; }
         window.location.href = "../../controlador/gestionarQueja.php?id_multa=" + idMulta + "&motivo=" + encodeURIComponent(motivo);
     }
     
-    // Detectar sección visible y resaltar enlace del menú
     const secciones = document.querySelectorAll('.seccion');
     const enlacesMenu = document.querySelectorAll('.menu-link');
     
     function activarEnlaceSegunScroll() {
         let indiceActual = -1;
         const scrollPos = window.scrollY + 100;
-        
         secciones.forEach((seccion, index) => {
             const offsetTop = seccion.offsetTop;
             const offsetBottom = offsetTop + seccion.offsetHeight;
-            
-            if (scrollPos >= offsetTop && scrollPos < offsetBottom) {
-                indiceActual = index;
-            }
+            if (scrollPos >= offsetTop && scrollPos < offsetBottom) indiceActual = index;
         });
-        
-        enlacesMenu.forEach(enlace => {
-            enlace.classList.remove('activo');
-        });
-        
-        if (indiceActual >= 0 && enlacesMenu[indiceActual]) {
-            enlacesMenu[indiceActual].classList.add('activo');
-        }
+        enlacesMenu.forEach(enlace => enlace.classList.remove('activo'));
+        if (indiceActual >= 0 && enlacesMenu[indiceActual]) enlacesMenu[indiceActual].classList.add('activo');
     }
     
     window.addEventListener('scroll', activarEnlaceSegunScroll);
     activarEnlaceSegunScroll();
     
-    // Scroll suave con offset
     document.querySelectorAll('.menu-link, .footer-menu a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const targetId = this.getAttribute('href');
@@ -339,11 +233,7 @@ $consulta_multas = mysqli_query($conn, $sql_multas);
                 if (targetElement) {
                     const headerHeight = document.querySelector('.cabezera').offsetHeight;
                     const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
                 }
             }
         });

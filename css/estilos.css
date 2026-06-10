@@ -20,7 +20,7 @@ body {
 }
 
 /* ==========================================================================
-   2. CABECERA (MENÚ FIJO)
+   2. CABECERA (MENU FIJO)
    ========================================================================== */
 .cabezera {
     background-color: #252525;
@@ -63,7 +63,7 @@ body {
     color: #F9C74F;
 }
 
-/* Enlace activo del menú */
+/* Enlace activo del menu */
 .navegador ul li a.activo {
     color: #F9C74F;
     border-bottom: 2px solid #F9C74F;
@@ -139,7 +139,7 @@ body {
 }
 
 /* ==========================================================================
-   5. TARJETAS DE ESTADÍSTICAS
+   5. TARJETAS DE ESTADISTICAS
    ========================================================================== */
 .flex-center {
     display: flex;
@@ -470,9 +470,9 @@ body {
 }
 
 /* ==========================================================================
-   9. TABLA GENERAL
+   9. TABLAS DE MULTERO
    ========================================================================== */
-.tabla-general {
+.tabla-pagos, .tabla-quejas, .tabla-multas-completa {
     width: 100%;
     border-collapse: collapse;
     background: white;
@@ -481,21 +481,105 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-.tabla-general th,
-.tabla-general td {
-    padding: 14px 16px;
+.tabla-pagos th, .tabla-pagos td,
+.tabla-quejas th, .tabla-quejas td,
+.tabla-multas-completa th, .tabla-multas-completa td {
+    padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #eee;
 }
 
-.tabla-general th {
+.tabla-pagos th, .tabla-quejas th, .tabla-multas-completa th {
     background-color: #252525;
     color: #F9C74F;
     font-weight: 600;
 }
 
-.tabla-general tr:hover {
-    background-color: #fafafa;
+/* Botones de multero */
+.btn-confirmar {
+    background-color: #2A9D8F;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.btn-confirmar:hover {
+    background-color: #21867a;
+}
+
+.btn-rechazar {
+    background-color: #E63946;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.8rem;
+    display: inline-block;
+}
+
+.btn-rechazar:hover {
+    background-color: #c1121f;
+}
+
+.btn-aceptar-queja {
+    background-color: #2A9D8F;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.btn-aceptar-queja:hover {
+    background-color: #21867a;
+}
+
+.btn-denegar-queja {
+    background-color: #E63946;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    display: inline-block;
+}
+
+.btn-denegar-queja:hover {
+    background-color: #c1121f;
+}
+
+/* Resumen de totales */
+.resumen-totales {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.resumen-totales span {
+    font-weight: bold;
+}
+
+.total-pagado {
+    color: #2A9D8F;
+}
+
+.total-pendiente {
+    color: #E63946;
 }
 
 /* ==========================================================================
@@ -622,14 +706,20 @@ body {
     }
     
     .tabla-ranking,
-    .tabla-general {
+    .tabla-pagos,
+    .tabla-quejas,
+    .tabla-multas-completa {
         font-size: 0.75rem;
     }
     
     .tabla-ranking th,
     .tabla-ranking td,
-    .tabla-general th,
-    .tabla-general td {
+    .tabla-pagos th,
+    .tabla-pagos td,
+    .tabla-quejas th,
+    .tabla-quejas td,
+    .tabla-multas-completa th,
+    .tabla-multas-completa td {
         padding: 10px 8px;
     }
     
@@ -644,5 +734,11 @@ body {
     
     .contenedorForm {
         padding: 30px 25px;
+    }
+    
+    .resumen-totales {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
     }
 }

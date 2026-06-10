@@ -26,21 +26,21 @@ if ($consulta && $usuario = mysqli_fetch_assoc($consulta)) {
         $_SESSION['usuario'] = $usuario['nombre'];
         $_SESSION['rol'] = $usuario['rol'];
 
+        // REDIRECCIONES ACTUALIZADAS
         if ($usuario['rol'] === 'jugador') {
             header("Location: ../index.php");
             exit();
         }
 
         if ($usuario['rol'] === 'multero') {
-            header("Location: ../indexM.php");
+            header("Location: ../vista/perfiles/multero.php");
             exit();
         }
-        /*
+
         if ($usuario['rol'] === 'admin') {
-            header("Location: ../admin/indexAdmin.php");
+            header("Location: ../vista/perfiles/multero.php");
             exit();
         }
-            */
 
     } else {
         header("Location:../vista/login.php?error=Contraseña incorrecta.");
@@ -51,3 +51,4 @@ if ($consulta && $usuario = mysqli_fetch_assoc($consulta)) {
     header("Location:../vista/login.php?error=Correo incorrecto.");
     exit();
 }
+?>

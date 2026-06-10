@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    require'modelo/conexion.php';
+
+    if(!isset($_SESSION['usuario'])){
+        header("Location:vista/login.php?");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,23 +18,24 @@
 <body>
     <div class="contenedorPrincipal">
         <header class="cabezera">
-            <div class="logo-container">
-                <div class="logo-circular"><img src="img/logoPequeño.png" width="56" height="50"></img></div>
-                <div class="logo-escrito"><img src="img/logoTexto.png" width="130" height="40"></div>
+            <div class="contenedorLogo">
+                <div class="logo-circular"><a href="index.php"><img src="img/logoPequeño.png" width="56" height="50"></a></div>
+                <div class="logo-escrito"><a href="index.php"><img src="img/logoTexto.png" width="130" height="40"></a></div>
             </div>
             
             <nav class="navegador">
                 <ul>
                     <li><a href="index.php?page=ranking">Ranking</a></li>
                     <li><a href="index.php?page=mis-multas">Mis Multas</a></li>
-                    <li><a href="index.php?page=login" class="btn-login">Entrar</a></li>
                 </ul>
             </nav>
         </header>
 
         <main class="content">
             <?php
+                echo "<h1>Bienvenido ". $_SESSION['usuario'] ."</h1>";
             ?>
+
         </main>
 
         <footer class="main-footer">

@@ -1,18 +1,14 @@
-/*Paleta de colores {
-    Amarillo: #F9C74F;
-    Negro grafito: #252525;
-    Gris muy claro para fondo: #F8F9FA;
-    blanco: #FFFFFF;
-    color texto: #333333;
-}
-*/
-
+/* ==========================================================================
+   1. RESET Y BASE
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background-color: #F0F2F5;
     color: #333333;
 }
@@ -23,42 +19,146 @@
     min-height: 100vh;
 }
 
+/* ==========================================================================
+   2. CABECERA
+   ========================================================================== */
 .cabezera {
     background-color: #252525;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 5%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+.contenedorLogo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
+.contenedorLogo a {
+    display: flex;
+    align-items: center;
+}
 
 .navegador ul {
     display: flex;
     list-style: none;
-    gap: 20px;
+    gap: 25px;
 }
 
-.navegador a {
-    color: #FFFFFF; /* Blanco */
+.navegador ul li a {
+    color: #FFFFFF;
     text-decoration: none;
     font-weight: 500;
+    font-size: 0.95rem;
 }
 
 .navegador a:hover {
-    color: #F9C74F; /* Amarillo al pasar el ratón */
+    color: #F9C74F;
 }
 
+/* ==========================================================================
+   3. CONTENIDO CENTRAL (LOGIN Y REGISTRO)
+   ========================================================================== */
 .content {
     flex: 1;
-    padding: 2rem 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
 }
 
+.contenedorImagen {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.titulo {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.contenedorForm {
+    background-color: #FFFFFF;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px 45px;
+    border-radius: 10px;
+    border: 1px solid #e1e4e8;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.contenedorForm form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedorForm label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #555;
+    text-transform: uppercase;
+}
+
+.contenedorForm input,
+.contenedorForm select {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #fcfcfc;
+    font-family: inherit;
+    color: #333333;
+}
+
+.contenedorForm select {
+    cursor: pointer;
+    background-color: #fcfcfc;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+.contenedorForm input:focus,
+.contenedorForm select:focus {
+    outline: none;
+    border-color: #F9C74F;
+    box-shadow: 0 0 0 2px rgba(249, 199, 79, 0.2);
+}
+
+.contenedorForm button {
+    background-color: #252525;
+    color: #F9C74F;
+    padding: 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1.05rem;
+    cursor: pointer;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.contenedorForm button:hover {
+    background-color: #F9C74F;
+    color: #252525;
+}
+
+/* ==========================================================================
+   4. FOOTER
+   ========================================================================== */
 .main-footer {
     background-color: #252525;
     color: #FFFFFF;
     text-align: center;
-    padding: 20px;
+    padding: 25px;
     font-size: 0.8rem;
-    border-top: 2px solid #F9C74F;
+    border-top: 4px solid #F9C74F;
 }

@@ -23,9 +23,18 @@
         </header>
 
         <main class="content">
-            <div class="contenedorImagen">
-                <img src="../img/perfil.png" width="120">
+            <section id="inicio" class="seccion">
+            <div class="tarjeta-bienvenida">
+                <div class="tarjeta-bienvenida-contenido">
+                    <h1>¡Bienvenida/o a isunki!</h1>
+                    <p>Esta es app te permitira gestionar las multas de tu equipo y todo en una plataforma unica. Olvidate de excels complicados y mal gestionados.</p>
+                    <p>Utiliza el menu superior para seleccionar Login o Registrarse.</p>
+                </div>
+                <div class="tarjeta-bienvenida-logo">
+                    <img src="../img/logoPequeño.png" width="90" height="80" alt="isunKi Logo">
+                </div>
             </div>
+            </section>
             <h2 class="titulo">Crear Cuenta</h2>
             <div class="contenedorForm">
                 <form action="../controlador/validarRegistro.php" method="POST">

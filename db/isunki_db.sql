@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 13-05-2026 a las 17:45:13
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Jun 11, 2026 at 09:03 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `isunki_db`
+-- Database: `isunki_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `multas`
+-- Table structure for table `multas`
 --
 
 CREATE TABLE `multas` (
@@ -33,15 +33,27 @@ CREATE TABLE `multas` (
   `id_usuario_creador` int(11) NOT NULL,
   `motivo` varchar(255) NOT NULL,
   `monto_a_pagar` decimal(10,2) NOT NULL,
-  `estado` enum('pendiente','pagado') DEFAULT 'pendiente',
+  `estado` enum('sin_pagar','pendiente','pagado') NOT NULL DEFAULT 'sin_pagar',
   `fecha_infraccion` date NOT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Dumping data for table `multas`
+--
+
+INSERT INTO `multas` (`id_multa`, `id_usuario_multado`, `id_usuario_creador`, `motivo`, `monto_a_pagar`, `estado`, `fecha_infraccion`, `fecha_registro`) VALUES
+(2, 4, 2, 'Prueba primera multa', 3.00, 'pagado', '2026-06-07', '2026-06-10 16:55:46'),
+(3, 4, 2, 'Llegar 10 minutos tarde', 5.00, 'pagado', '2026-05-29', '2026-06-10 18:47:26'),
+(4, 2, 2, 'Te has dejado la sudadera', 2.00, 'sin_pagar', '2026-06-02', '2026-06-10 18:48:01'),
+(7, 4, 2, 'Llegar 5 minutos tarde', 2.00, 'pagado', '2026-06-04', '2026-06-11 01:47:50'),
+(8, 4, 2, 'Te has dejado la sudadera', 2.00, 'sin_pagar', '2026-06-05', '2026-06-11 06:23:54'),
+(10, 6, 7, 'Te has dejado la sudadera', 2.00, 'sin_pagar', '2026-06-11', '2026-06-11 06:33:17');
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `quejas`
+-- Table structure for table `quejas`
 --
 
 CREATE TABLE `quejas` (
@@ -49,14 +61,23 @@ CREATE TABLE `quejas` (
   `id_usuario_emisor` int(11) NOT NULL,
   `id_multa_referencia` int(11) NOT NULL,
   `motivo_queja` text NOT NULL,
-  `estado` enum('pendiente','rechazada','aceptada') DEFAULT NULL,
+  `estado` enum('pendiente','rechazada','aceptada') NOT NULL DEFAULT 'pendiente',
   `fecha_queja` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `quejas`
+--
+
+INSERT INTO `quejas` (`id_queja`, `id_usuario_emisor`, `id_multa_referencia`, `motivo_queja`, `estado`, `fecha_queja`) VALUES
+(2, 4, 3, 'llegue 5 minutos tarde no 10', '', '2026-06-10 20:11:31'),
+(6, 4, 7, 'Queja de prueba', '', '2026-06-11 01:53:00'),
+(8, 4, 7, 'alkñdfjalñkdjfñadjfañdjfasdjfñlasd', 'pendiente', '2026-06-11 06:27:28');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -65,23 +86,28 @@ CREATE TABLE `usuarios` (
   `apellido` varchar(200) NOT NULL,
   `correo` varchar(200) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `rol` enum('admin','multero','jugador') DEFAULT 'jugador',
+  `rol` enum('admin','multero','jugador') NOT NULL DEFAULT 'jugador',
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `correo`, `password`, `rol`, `fecha_registro`) VALUES
-(1, 'Aner', 'Monzon', 'admin@isunki.eus', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', '2026-05-13 15:42:26');
+(1, 'admin', 'admin', 'admin@isunki.eus', '$2y$10$P4LajPK1MSbLsUoR4P08Hu7jVMgPaBNkpvsY8OrZdNymZPPYkHOKG', 'admin', '2026-06-10 11:41:34'),
+(2, 'multero1', 'multero', 'multero@ejemplo.com', '$2y$10$0JTC7DgYTF.MItqOP9cX5Op74IMANgpbxjmufbft/4mICEXP7X9oS', 'multero', '2026-06-10 13:32:42'),
+(4, 'jugador1', 'jugador', 'jugador@ejemplo.com', '$2y$10$/FBBaA6m/.JYk/AcTe.WOeAKvhzMLMRZiB3.kFLehLgEDdQd95McK', 'jugador', '2026-06-10 13:39:21'),
+(5, 'jugador2', 'jugador', 'jugador2@ejemplo.com', '$2y$10$OV3stEcGoQC30Yl5QzVtSuLYO9rCrYU5E.Jxxos/vZxm0MHB6us8K', 'jugador', '2026-06-11 06:13:35'),
+(6, 'josemi', 'garcia', 'josemi@correo.com', '$2y$10$hI2/X/XCiBJrg.CSxGQkHebq8gyDL.ysTpwHXg7Z36wR1gQlxyJLG', 'jugador', '2026-06-11 06:29:15'),
+(7, 'erik', 'menendez', 'erik@correo.com', '$2y$10$JUNCN5h0TiQGRavgLagaW.gglT0IsQhsWPnkHHm.3oY1/Vg50NQX2', 'multero', '2026-06-11 06:31:37');
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `multas`
+-- Indexes for table `multas`
 --
 ALTER TABLE `multas`
   ADD PRIMARY KEY (`id_multa`),
@@ -89,7 +115,7 @@ ALTER TABLE `multas`
   ADD KEY `id_usuario_creador` (`id_usuario_creador`);
 
 --
--- Indices de la tabla `quejas`
+-- Indexes for table `quejas`
 --
 ALTER TABLE `quejas`
   ADD PRIMARY KEY (`id_queja`),
@@ -97,47 +123,47 @@ ALTER TABLE `quejas`
   ADD KEY `id_usuario_emisor` (`id_usuario_emisor`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_usuario`),
   ADD UNIQUE KEY `correo` (`correo`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `multas`
+-- AUTO_INCREMENT for table `multas`
 --
 ALTER TABLE `multas`
-  MODIFY `id_multa` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_multa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla `quejas`
+-- AUTO_INCREMENT for table `quejas`
 --
 ALTER TABLE `quejas`
-  MODIFY `id_queja` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_queja` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `multas`
+-- Constraints for table `multas`
 --
 ALTER TABLE `multas`
   ADD CONSTRAINT `multas_ibfk_1` FOREIGN KEY (`id_usuario_multado`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
   ADD CONSTRAINT `multas_ibfk_2` FOREIGN KEY (`id_usuario_creador`) REFERENCES `usuarios` (`id_usuario`);
 
 --
--- Filtros para la tabla `quejas`
+-- Constraints for table `quejas`
 --
 ALTER TABLE `quejas`
   ADD CONSTRAINT `quejas_ibfk_1` FOREIGN KEY (`id_multa_referencia`) REFERENCES `multas` (`id_multa`) ON DELETE CASCADE,
